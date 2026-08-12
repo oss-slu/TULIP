@@ -1,4 +1,9 @@
-# React + Vite
+# TULIP
+## Trusted Unified Legal Intake Portal
+
+TULIP (Trusted Unified Legal Intake Portal) is a web application created in partnership between OSS and the SLU School of Law Clinic Program. It is a digital intake portal for all clinics within the program to replace the current paper-based intake system. Case-assignment workflows are standardized through this tool for more efficient document management.
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

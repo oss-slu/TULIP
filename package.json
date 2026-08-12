@@ -13,6 +13,10 @@
     "test": "npm test --workspaces"
   },
   "devDependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "prisma": "^7.9.1"
+  },
+  "dependencies": {
+    "prisma-field-encryption": "^1.6.0"
   }
 }

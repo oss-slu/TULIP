@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model user {
+  id               String             @id @default(cuid())
+  email            String             @unique
+  password         String?
+  firstName        String
+  lastName         String
+  admin            Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  clinic           Clinic[]
+  logs             logs[]
+}
+
+model logs {
+  id                           String                      @id @default(cuid())
+  type                         LogType
+  message                      String?
+  from                         String?
+  to                           String?
+  userId                       String?
+  clinicId                     String?
+  intakeFormId                 String?
+}
+
+model Clinic {
+  id               String             @id @default(cuid())
+  name             String
+  description      String?
+  members          UserClinicGroup[]
+}
+
+model UserClinicGroup {
+  id             String               @id @default(cuid())
+  userId         String
+  role           UserClinicRole       @default(CLIENT)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  active         Boolean              @default(true)
+  user           user                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs           logs[]
+}
+
+model IntakeForm {
+  id               String             @id @default(cuid())
+  clinicId         String
+  userId           String
+  status           ProgressStatus     @default(NEW)
+  clinicName       String
+  firstName        String
+  lastName         String
+  email            String             @unique
+  street address   String
+  city             String
+  state            String
+  country          String
+  zipCode          Int
+  mobilePhone      String
+  homePhone        String
+  ssn              Int
+  dob              DateTime
+  clinic           Clinic             @relation(fields: [clinicId], references: [id])
+  user             user               @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum ProgressStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  WAITING_FOR_CLIENT_REVIEW
+  CANCELLED
+}
+
+enum UserClinicRole {
+  CLIENT
+  PROVIDER
+  ADMIN
+}

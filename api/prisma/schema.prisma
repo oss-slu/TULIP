@@ -13,67 +13,76 @@ datasource db {
 }
 
 model user {
-  id               String             @id @default(cuid())
-  email            String             @unique
+  id               String            @id @default(cuid())
+  email            String            @unique
   password         String?
   firstName        String
   lastName         String
-  admin            Boolean            @default(false)
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  admin            Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
   clinic           Clinic[]
   logs             logs[]
+  userClinicGroups UserClinicGroup[]
+  intakeForms      IntakeForm[]
 }
 
 model logs {
-  id                           String                      @id @default(cuid())
-  type                         LogType
-  message                      String?
-  from                         String?
-  to                           String?
-  userId                       String?
-  clinicId                     String?
-  intakeFormId                 String?
+  id                String           @id @default(cuid())
+  message           String?
+  from              String?
+  to                String?
+  userId            String?
+  clinicId          String?
+  intakeFormId      String?
+  user              user?            @relation(fields: [userId], references: [id])
+  userClinicGroup   UserClinicGroup? @relation(fields: [userClinicGroupId], references: [id])
+  userClinicGroupId String?
 }
 
 model Clinic {
-  id               String             @id @default(cuid())
-  name             String
-  description      String?
-  members          UserClinicGroup[]
+  id          String            @id @default(cuid())
+  name        String
+  description String?
+  members     UserClinicGroup[]
+  user        user?             @relation(fields: [userId], references: [id])
+  userId      String?
+  intakeForms IntakeForm[]
 }
 
 model UserClinicGroup {
-  id             String               @id @default(cuid())
-  userId         String
-  role           UserClinicRole       @default(CLIENT)
-  createdAt      DateTime             @default(now())
-  updatedAt      DateTime             @updatedAt
-  active         Boolean              @default(true)
-  user           user                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  logs           logs[]
+  id        String         @id @default(cuid())
+  userId    String
+  role      UserClinicRole @default(CLIENT)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  active    Boolean        @default(true)
+  user      user           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs      logs[]
+  clinic    Clinic?        @relation(fields: [clinicId], references: [id])
+  clinicId  String?
 }
 
 model IntakeForm {
-  id               String             @id @default(cuid())
-  clinicId         String
-  userId           String
-  status           ProgressStatus     @default(NEW)
-  clinicName       String
-  firstName        String
-  lastName         String
-  email            String             @unique
-  street address   String
-  city             String
-  state            String
-  country          String
-  zipCode          Int
-  mobilePhone      String
-  homePhone        String
-  ssn              Int
-  dob              DateTime
-  clinic           Clinic             @relation(fields: [clinicId], references: [id])
-  user             user               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String         @id @default(cuid())
+  clinicId       String
+  userId         String
+  status         ProgressStatus @default(NEW)
+  clinicName     String
+  firstName      String
+  lastName       String
+  email          String         @unique
+  street_address String
+  city           String
+  state          String
+  country        String
+  zipCode        Int
+  mobilePhone    String
+  homePhone      String
+  ssn            String
+  dob            DateTime
+  clinic         Clinic         @relation(fields: [clinicId], references: [id])
+  user           user           @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum ProgressStatus {

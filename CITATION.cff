@@ -1,0 +1,19 @@
+title: TULIP
+authors:
+  - given-names: Bella
+    family-names: Ott
+    email: bella.c.ott.04@gmail.com
+    affiliation: Open Source with SLU
+cff-version: 1.2.0
+message: If you use this software, please cite it using the metadata from this file.
+type: software
+abstract: TULIP (Trusted Unified Legal Intake Portal) is a web application
+  created in partnership between OSS and the SLU School of Law Clinic Program.
+  It is a digital intake portal for all clinics within the program to replace
+  the current paper-based intake system. Case-assignment workflows are
+  standardized through this tool for more efficient document management.
+keywords:
+  - legal
+  - civil
+license: MIT
+repository-code: https://github.com/oss-slu/TULIP

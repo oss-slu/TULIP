@@ -1,0 +1,32 @@
+{
+  "name": "TULIP",
+  "@context": "https://w3id.org/codemeta/3.0",
+  "author": [
+    {
+      "affiliation": {
+        "name": "Open Source with SLU",
+        "type": "Organization"
+      },
+      "email": "bella.c.ott.04@gmail.com",
+      "familyName": "Ott",
+      "id": "_:author_1",
+      "givenName": "Bella",
+      "type": "Person"
+    }
+  ],
+  "codeRepository": "https://github.com/oss-slu/TULIP",
+  "dateCreated": "2026-08-12",
+  "description": "TULIP (Trusted Unified Legal Intake Portal) is a web application created in partnership between OSS and the SLU School of Law Clinic Program. It is a digital intake portal for all clinics within the program to replace the current paper-based intake system. Case-assignment workflows are standardized through this tool for more efficient document management.",
+  "issueTracker": "https://github.com/oss-slu/TULIP/issues",
+  "keywords": [
+    "legal",
+    "civil"
+  ],
+  "license": "https://spdx.org/licenses/MIT",
+  "programmingLanguage": [
+    "JavaScript",
+    "TypeScript",
+    "React"
+  ],
+  "type": "SoftwareSourceCode"
+}

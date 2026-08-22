@@ -3,19 +3,77 @@
 
 TULIP (Trusted Unified Legal Intake Portal) is a web application created in partnership between OSS and the SLU School of Law Clinic Program. It is a digital intake portal for all clinics within the program to replace the current paper-based intake system. Case-assignment workflows are standardized through this tool for more efficient document management.
 
-## React + Vite
+## Installation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 1. Install [node.js](https://nodejs.org/en/download/current)
 
-Currently, two official plugins are available:
+### 2. Install [Postgres](https://www.postgresql.org/download/) (or have access to a connection string) and start local server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 3. Clone the repository
 
-## React Compiler
+```bash
+git clone https://github.com/oss-slu/tulip.git
+```
+### 4. Set up environment variables
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/YOUR_DATABASE_NAME" (start a local postgres server and put that here)
+```
 
-## Expanding the ESLint configuration
+### 5. Install dependencies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd tulip
+npm install
+```
+
+```bash
+cd app
+npm install
+```
+
+```bash
+cd api
+npm install
+```
+
+### 6. Start the development server
+
+```bash
+cd api
+npm run dev
+```
+
+### 7. Start the react app
+
+```bash
+cd app
+npm run dev
+```
+
+### 8. Open your browser to `http://localhost:5173` to view the app
+
+### 9. Migrate prisma database with local postgres server.
+
+Install Prisma Client
+```bash
+npm install prisma --save-dev
+npm install @prisma/client @prisma/adapter-pg pg
+```
+
+Generate Prisma Client
+```bash
+npx prisma generate
+```
+
+Apply migrations
+```bash
+npx prisma migrate dev
+```
+
+### 10. If you need to access the database (not necessary for initial setup), open Prisma Studio
+
+Run the following in your terminal (Command Prompt for Windows) to open the database
+```bash
+npx prisma studio
+```

@@ -4,8 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "./generated"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -79,7 +78,7 @@ model IntakeForm {
   zipCode        Int
   mobilePhone    String
   homePhone      String
-  ssn            String
+  ssn            Int
   dob            DateTime
   clinic         Clinic         @relation(fields: [clinicId], references: [id])
   user           user           @relation(fields: [userId], references: [id], onDelete: Cascade)

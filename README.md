@@ -55,6 +55,11 @@ npm run dev
 
 ### 9. Migrate prisma database with local postgres server.
 
+Change directory
+```bash
+cd api
+```
+
 Install Prisma Client
 ```bash
 npm install prisma --save-dev
@@ -69,6 +74,11 @@ npx prisma generate
 Apply migrations
 ```bash
 npx prisma migrate dev
+```
+
+Run seed file
+```bash
+npm run db:seed
 ```
 
 ### 10. If you need to access the database (not necessary for initial setup), open Prisma Studio

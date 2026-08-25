@@ -1,18 +1,23 @@
 {
   "name": "tulip-api",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "description": "API service for the TULIP application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "db:seed": "node prisma/seed.js",
     "lint": "eslint .",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.9.1",
+    "dotenv": "^17.4.2",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

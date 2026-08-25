@@ -32,14 +32,6 @@ export default function Home() {
               <p style={{color: '#475569'}}>Place primary homepage content here — overview, recent posts, or dashboard links.</p>
             </div>
 
-            <aside style={{background: '#fff', padding: 20, borderRadius: 8, boxShadow: '0 1px 2px rgba(16,24,40,0.04)'}}>
-              <h3 style={{marginTop: 0, fontSize: 16}}>Quick links</h3>
-              <ul style={{paddingLeft: 18, margin: '8px 0'}}>
-                <li>Get started</li>
-                <li>Documentation</li>
-                <li>Support</li>
-              </ul>
-            </aside>
           </section>
 
           <section style={{display: 'grid', gap: 12}}>

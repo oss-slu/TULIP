@@ -3,20 +3,18 @@ import React, { useState } from 'react'
 // Simple legal intake form UI (fields inspired by a typical Prisma IntakeForm schema)
 const IntakeForm = ({ onSubmit }) => {
   const [form, setForm] = useState({
-    clientFirstName: '',
-    clientLastName: '',
+    clientfullName: '',
     email: '',
-    mobile: '',
-    home: '',
     address: '',
-    city: '',
-    state: '',
-    zip: '',
+    phone: '',
     birthDate: '',
     ssn: '',
     caseType: '',
-    description: '',
+    reasonForIntake: '',
+    legalIssue: '',
+    legalHistory: '',
     consent: false,
+    signature: '',
   })
 
   const [errors, setErrors] = useState({})

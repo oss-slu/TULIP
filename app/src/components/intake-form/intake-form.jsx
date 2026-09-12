@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 const IntakeForm = ({ onSubmit }) => {
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState({ //wireframe requirements 
     fullName: '',
     email: '',
     address: '',
@@ -17,7 +17,7 @@ const IntakeForm = ({ onSubmit }) => {
     legalHistory: '',
     consent: false,
     signature: '',
-  }) //Initial state for the form fields
+  })
 
   const [errors, setErrors] = useState({})
   const [showSSN, setShowSSN] = useState(false)
@@ -27,9 +27,8 @@ const IntakeForm = ({ onSubmit }) => {
     setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
   }
 
-  const validate = () => { //Validation function to check required fields 
+  const validate = () => { //validation for required fields and email format
     const errs = {}
-
     if (!form.fullName.trim()) errs.fullName = 'Required'
     if (!form.email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) errs.email = 'Invalid email'
     if (!form.address.trim()) errs.address = 'Required'
@@ -40,83 +39,90 @@ const IntakeForm = ({ onSubmit }) => {
     if (!form.reasonForIntake.trim()) errs.reasonForIntake = 'Required'
     if (!form.consent) errs.consent = 'Consent required'
     if (!form.signature.trim()) errs.signature = 'Required'
-
     setErrors(errs)
     return Object.keys(errs).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { //all of the following are in black and white until color is decided
     e.preventDefault()
     if (!validate()) return
     if (onSubmit) onSubmit(form)
   }
 
+  const labelStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 6,
+    marginTop: 22
+  }
+
+  const inputStyle = {
+    padding: '12px',
+    border: '1px solid black',
+    fontSize: 16,
+    background: 'white',
+    color: 'black',
+    boxSizing: 'border-box',
+    width: '100%'
+  }
+
   return (
+    <form onSubmit={handleSubmit} style={{maxWidth:760, margin:'0 auto', padding:'70px 24px', fontFamily:'Arial, sans-serif', color:'black', background:'white'}}>
 
-    <form onSubmit={handleSubmit} style={{width:"80%", margin:"0 auto", fontFamily:"Arial,Helvetica,sans-serif"}}>
+      <p style={{fontSize:13, letterSpacing:2, marginBottom:18}}>SAINT LOUIS UNIVERSITY LEGAL CLINICS PROGRAM</p>
 
-      <h2>TULIP Intake Form</h2>
+      <h1 style={{fontFamily:'Georgia, serif', fontSize:52, lineHeight:1.05, margin:'0 0 20px'}}>Tell us how we can help.</h1>
 
-      <p>Fields marked * are required.</p>
+      <p style={{fontSize:18, lineHeight:1.6, maxWidth:650, marginBottom:8}}>
+        This intake form is the first step in connecting you with legal assistance. 
+      </p> 
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
+      <p style={{fontSize:14, marginBottom:35}}>Fields marked * are required.</p>
+
+      <label style={labelStyle}>
         Full name *
-        <input name="fullName" value={form.fullName} onChange={handleChange} />
-        <div style={{color:"red"}}>{errors.fullName}</div>
+        <input name="fullName" value={form.fullName} onChange={handleChange} style={inputStyle} />
+        <div>{errors.fullName}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
+      <label style={labelStyle}>
         Email *
-        <input type="email" name="email" value={form.email} onChange={handleChange} />
-        <div style={{color:"red"}}>{errors.email}</div>
+        <input type="email" name="email" value={form.email} onChange={handleChange} style={inputStyle} />
+        <div>{errors.email}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
+      <label style={labelStyle}>
         Mailing address *
-        <input name="address" value={form.address} onChange={handleChange} />
-        <div style={{color:"red"}}>{errors.address}</div>
+        <input name="address" value={form.address} onChange={handleChange} style={inputStyle} />
+        <div>{errors.address}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
+      <label style={labelStyle}>
         Phone number *
-        <input type="tel" name="phone" value={form.phone} onChange={handleChange} />
-        <div style={{color:"red"}}>{errors.phone}</div>
+        <input type="tel" name="phone" value={form.phone} onChange={handleChange} style={inputStyle} />
+        <div>{errors.phone}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
+      <label style={labelStyle}>
         Date of birth *
-        <input type="date" name="birthDate" value={form.birthDate} onChange={handleChange} />
-        <div style={{color:"red"}}>{errors.birthDate}</div>
+        <input type="date" name="birthDate" value={form.birthDate} onChange={handleChange} style={inputStyle} />
+        <div>{errors.birthDate}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
+      <label style={labelStyle}> 
         Social Security number *
-
-        <div>
-          <input
-            type={showSSN ? "text" : "password"}
-            name="ssn"
-            value={form.ssn}
-            onChange={handleChange}
-          />
-
-          <button
-            type="button"
-            onClick={() => setShowSSN((s) => !s)}
-            aria-label={showSSN ? "Hide SSN" : "Show SSN"}
-            style={{marginLeft:8}}
-          >
-            {showSSN ? "Hide" : "Show"}
+        <div style={{display:'flex', gap:8}}>
+          <input type={showSSN ? 'text' : 'password'} name="ssn" value={form.ssn} onChange={handleChange} style={inputStyle} />
+          <button type="button" onClick={() => setShowSSN((s) => !s)} style={{padding:'0 16px', background:'white', border:'1px solid black'}}>
+            {showSSN ? 'Hide' : 'Show'}
           </button>
         </div>
-
-        <div style={{color:"red"}}>{errors.ssn}</div>
+        <div>{errors.ssn}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
-        Case type selection *
-
-        <select name="caseType" value={form.caseType} onChange={handleChange}> //all updated with TULIP specific fields
+      <label style={labelStyle}>
+        What type of legal help do you need? *
+        <select name="caseType" value={form.caseType} onChange={handleChange} style={inputStyle}>
           <option value="">-- select --</option>
           <option value="CPC">CPC</option>
           <option value="MLP">MLP</option>
@@ -125,81 +131,44 @@ const IntakeForm = ({ onSubmit }) => {
           <option value="Civil">Civil</option>
           <option value="Criminal">Criminal</option>
         </select>
-
-        <div style={{color:"red"}}>{errors.caseType}</div>
+        <div>{errors.caseType}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
-        Reason for intake *
-
-        <textarea
-          name="reasonForIntake" //new field added for TULIP specific intake form
-          value={form.reasonForIntake}
-          onChange={handleChange}
-          rows={4}
-        />
-
-        <div style={{color:"red"}}>{errors.reasonForIntake}</div>
+      <label style={labelStyle}>
+        What brings you to the clinic? *
+        <textarea name="reasonForIntake" value={form.reasonForIntake} onChange={handleChange} rows={5} style={inputStyle} />
+        <div>{errors.reasonForIntake}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
-        Legal issue description
-
-        <textarea
-          name="legalIssue" //new field added for TULIP specific intake form
-          value={form.legalIssue}
-          onChange={handleChange}
-          rows={5}
-        />
+      <label style={labelStyle}>
+        Tell us more about your legal issue
+        <textarea name="legalIssue" value={form.legalIssue} onChange={handleChange} rows={5} style={inputStyle} />
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
-        Basic legal history
-
-        <textarea
-          name="legalHistory" //new field added for TULIP specific intake form
-          value={form.legalHistory}
-          onChange={handleChange}
-          rows={5}
-          placeholder="Prior attorneys, prior case types, etc."
-        />
+      <label style={labelStyle}>
+        Have you received legal help for this issue before?
+        <textarea name="legalHistory" value={form.legalHistory} onChange={handleChange} rows={4} placeholder="Please tell us about any previous attorneys or legal cases related to this issue." style={inputStyle} />
       </label>
 
-      <label style={{display:"flex", alignItems:"center", marginTop:10, width:"100%"}}>
-        <input
-          type="checkbox"
-          name="consent"
-          checked={form.consent}
-          onChange={handleChange}
-        />
-        
-        <span style={{marginLeft:8}}> 
-          I acknowledge the clinic's consent and confidentiality terms * 
-        </span> 
-        
-        <div style={{color:"red", marginLeft:8}}>{errors.consent}</div>
+      <label style={{display:'flex', gap:10, alignItems:'flex-start', marginTop:28}}>
+        <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} />
+        <span>I acknowledge the clinic's consent and confidentiality terms *</span>
+      </label>
+      <div>{errors.consent}</div>
+
+      <label style={labelStyle}>
+        Your signature *
+        <input name="signature" value={form.signature} onChange={handleChange} placeholder="Sign here" style={inputStyle} />
+        <div>{errors.signature}</div>
       </label>
 
-      <label style={{display:"flex", flexDirection:"column", marginTop:10, width:"100%"}}>
-        Digital signature *
-
-        <input 
-          type="text"
-          name="signature"
-          value={form.signature}
-          onChange={handleChange}
-          placeholder="Sign here"
-        />
-
-        <div style={{color:"red"}}>{errors.signature}</div>
-      </label>
-
-      <div style={{marginTop:12}}>
-        <button type="submit">Submit</button>
-      </div>
+      <button type="submit" style={{marginTop:30, padding:'14px 28px', background:'black', color:'white', border:'1px solid black', fontSize:16}}>
+        Submit intake →
+      </button>
 
     </form>
   )
 }
+//changed a lot of wording to go with existing homepage that is more welcoming and less formal, and to make it more clear what the form is for. Also added a few more fields that were in the wireframe but not in the original form.
 
 export default IntakeForm

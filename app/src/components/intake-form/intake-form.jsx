@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 
 // TULIP Specific Intake Form Fields:
@@ -21,7 +22,6 @@ const IntakeForm = ({ onSubmit }) => {
 
   const [errors, setErrors] = useState({})
   const [showSSN, setShowSSN] = useState(false)
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
@@ -81,38 +81,38 @@ const IntakeForm = ({ onSubmit }) => {
 
       <label style={labelStyle}>
         Full name *
-        <input name="fullName" value={form.fullName} onChange={handleChange} style={inputStyle} />
+        <input name="fullName" value={form.fullName} onChange={handleChange} style={inputStyle} required />
         <div>{errors.fullName}</div>
       </label>
 
       <label style={labelStyle}>
         Email *
-        <input type="email" name="email" value={form.email} onChange={handleChange} style={inputStyle} />
+        <input type="email" name="email" value={form.email} onChange={handleChange} style={inputStyle} required />
         <div>{errors.email}</div>
       </label>
 
       <label style={labelStyle}>
         Mailing address *
-        <input name="address" value={form.address} onChange={handleChange} style={inputStyle} />
+        <input name="address" value={form.address} onChange={handleChange} style={inputStyle} required />
         <div>{errors.address}</div>
       </label>
 
       <label style={labelStyle}>
         Phone number *
-        <input type="tel" name="phone" value={form.phone} onChange={handleChange} style={inputStyle} />
+        <input type="tel" name="phone" value={form.phone} onChange={handleChange} style={inputStyle} required />
         <div>{errors.phone}</div>
       </label>
 
       <label style={labelStyle}>
         Date of birth *
-        <input type="date" name="birthDate" value={form.birthDate} onChange={handleChange} style={inputStyle} />
+        <input type="date" name="birthDate" value={form.birthDate} onChange={handleChange} style={inputStyle} required />
         <div>{errors.birthDate}</div>
       </label>
 
       <label style={labelStyle}> 
         Social Security number *
         <div style={{display:'flex', gap:8}}>
-          <input type={showSSN ? 'text' : 'password'} name="ssn" value={form.ssn} onChange={handleChange} style={inputStyle} />
+          <input type={showSSN ? 'text' : 'password'} name="ssn" value={form.ssn} onChange={handleChange} style={inputStyle} required />
           <button type="button" onClick={() => setShowSSN((s) => !s)} style={{padding:'0 16px', background:'white', border:'1px solid black'}}>
             {showSSN ? 'Hide' : 'Show'}
           </button>
@@ -122,21 +122,21 @@ const IntakeForm = ({ onSubmit }) => {
 
       <label style={labelStyle}>
         What type of legal help do you need? *
-        <select name="caseType" value={form.caseType} onChange={handleChange} style={inputStyle}>
+        <select name="caseType" value={form.caseType} onChange={handleChange} style={inputStyle} required>
           <option value="">-- select --</option>
-          <option value="CPC">CPC</option>
-          <option value="MLP">MLP</option>
-          <option value="Human Rights">Human Rights</option>
-          <option value="ECD">ECD</option>
-          <option value="Civil">Civil</option>
-          <option value="Criminal">Criminal</option>
+          <option value="cpc">Children's Permanency</option>
+          <option value="civil">Civil Litigation</option>
+          <option value="criminal">Criminal Defense</option>
+          <option value="ecp">Entrepreneurship and Community Development</option>
+          <option value="hrl">Human Rights at Home Litigation</option>
+          <option value="mlp">Medical-Legal Partnership</option>
         </select>
         <div>{errors.caseType}</div>
       </label>
 
       <label style={labelStyle}>
         What brings you to the clinic? *
-        <textarea name="reasonForIntake" value={form.reasonForIntake} onChange={handleChange} rows={5} style={inputStyle} />
+        <textarea name="reasonForIntake" value={form.reasonForIntake} onChange={handleChange} rows={5} style={inputStyle} required />
         <div>{errors.reasonForIntake}</div>
       </label>
 
@@ -151,14 +151,14 @@ const IntakeForm = ({ onSubmit }) => {
       </label>
 
       <label style={{display:'flex', gap:10, alignItems:'flex-start', marginTop:28}}>
-        <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} />
+        <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} required />
         <span>I acknowledge the clinic's consent and confidentiality terms *</span>
       </label>
       <div>{errors.consent}</div>
 
       <label style={labelStyle}>
         Your signature *
-        <input name="signature" value={form.signature} onChange={handleChange} placeholder="Sign here" style={inputStyle} />
+        <input name="signature" value={form.signature} onChange={handleChange} placeholder="Sign here" style={inputStyle} required />
         <div>{errors.signature}</div>
       </label>
 

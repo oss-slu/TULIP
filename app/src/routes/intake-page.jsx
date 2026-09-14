@@ -9,12 +9,7 @@ const IntakePage = () => {
     console.log("Form submitted:", data);
   };
 
-  return (
-    <div>
-      <h1>Legal Intake Form</h1>
-      <IntakeForm onSubmit={handleSubmit} />
-    </div>
-  );
+  return <IntakeForm onSubmit={handleSubmit} />;
 }
 
 export default IntakePage;

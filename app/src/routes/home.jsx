@@ -73,10 +73,7 @@ export default function Home() {
               find the right next step.
             </p>
 
-            <a
-              className="button"
-              href="mailto:help@tulip.edu?subject=Legal%20clinic%20intake"
-            >
+            <a className="button" href="/intake">
               Start an intake <span>→</span>
             </a>
 
@@ -89,7 +86,6 @@ export default function Home() {
           <div className="law-media">
             <img src={sluLawImg} alt="Saint Louis University School of Law" />
           </div>
-
         </section>
 
         <section

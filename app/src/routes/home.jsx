@@ -1,53 +1,190 @@
-import React from 'react'
+import "../App.css";
+import Header from "../components/header/header";
+import tulipLogo from "../assets/TULIPlogo.svg";
+import locationIcon from "../assets/locationicon.png";
+import phoneIcon from "../assets/phoneicon.png";
+import emailIcon from "../assets/emailicon.png";
 
-// Homepage skeleton — uses an eventual Header component (placeholder used here)
+
+const sluLawImg = "https://www.slu.edu/law/-img/centers-of-excellence.jpg";
+
+const NAV_LINKS = [
+  { label: "Home", href: "#top" },
+  { label: "About", href: "#about" },
+  { label: "Clinics", href: "#clinics" },
+  { label: "Contact", href: "#contact" },
+  { label: "Resources", href: "#resources" },
+];
+
+const CLINICS = [
+  {
+    name: "Insert Name here",
+    location: "Insert here",
+    phone: "Insert here",
+    phoneHref: "Insert here",
+    email: "Insert here",
+  },
+  {
+    name: "Insert Name here",
+    location: "Insert here",
+    phone: "Insert here",
+    phoneHref: "Insert here",
+    email: "Insert here",
+  },
+  {
+    name: "Insert Name here",
+    location: "Insert here",
+    phone: "Insert here",
+    phoneHref: "Insert here",
+    email: "Insert here",
+  },
+];
+
+const ACRONYM = [
+  ["T", "rusted"],
+  ["U", "nified"],
+  ["L", "egal"],
+  ["I", "ntake"],
+  ["P", "ortal"],
+];
+
+function Icon({ src, alt = "" }) {
+  return <img className="icon" src={src} alt={alt} />;
+}
+
 export default function Home() {
   return (
-    <div style={{fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif', color: '#0f172a'}}>
-      {/* Header placeholder - replace with <Header /> when available */}
-      <div
-        data-placeholder="Header"
-        style={{padding: '20px 24px', borderBottom: '1px solid #e6eef8', background: '#fff'}}
-      >
-        <div style={{maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <div style={{fontWeight: 700}}>TULIP</div>
-          <nav style={{display: 'flex', gap: 16, opacity: 0.8}}>
-            <div>Home</div>
-            <div>About</div>
-            <div>Contact</div>
-          </nav>
-        </div>
-      </div>
+    <>
+      <Header />
 
-      <main style={{maxWidth: 1100, margin: '48px auto', padding: '0 24px'}}>
-        <section style={{display: 'grid', gap: 24}}>
-          <header style={{display: 'grid', gap: 8}}>
-            <h1 style={{margin: 0, fontSize: 36, lineHeight: 1.1}}>Welcome to TULIP</h1>
-            <p style={{margin: 0, color: '#475569'}}>A simple starting point for the application homepage.</p>
-          </header>
+      <main className="page">
+        <section className="hero" id="top">
+          <div className="hero-copy">
+            <p className="eyebrow">
+              SAINT LOUIS UNIVERSITY LEGAL CLINICS PROGRAM
+            </p>
 
-          <section style={{display: 'grid', gridTemplateColumns: '1fr 320px', gap: 24}}>
-            <div style={{background: '#fff', padding: 20, borderRadius: 8, boxShadow: '0 1px 2px rgba(16,24,40,0.04)'}}>
-              <h2 style={{marginTop: 0, fontSize: 18}}>Main content</h2>
-              <p style={{color: '#475569'}}>Place primary homepage content here — overview, recent posts, or dashboard links.</p>
-            </div>
+            <h1>Legal help starts here.</h1>
 
-          </section>
+            <p className="lead">
+              <strong>TULIP — the Trusted Unified Legal Intake Portal —</strong>{" "}
+              connects people with the SLU Legal Clinics Program and practical
+              resources. Tell us what you need help with, and we’ll help you
+              find the right next step.
+            </p>
 
-          <section style={{display: 'grid', gap: 12}}>
-            <h3 style={{margin: 0}}>Features</h3>
-            <div style={{display: 'flex', gap: 12}}>
-              <div style={{flex: 1, background: '#fff', padding: 16, borderRadius: 8}}>Feature one</div>
-              <div style={{flex: 1, background: '#fff', padding: 16, borderRadius: 8}}>Feature two</div>
-              <div style={{flex: 1, background: '#fff', padding: 16, borderRadius: 8}}>Feature three</div>
-            </div>
-          </section>
+            <a
+              className="button"
+              href="mailto:help@tulip.edu?subject=Legal%20clinic%20intake"
+            >
+              Start an intake <span>→</span>
+            </a>
+
+            <p className="note">
+              Free and confidential. Sending a request does not create an
+              attorney-client relationship.
+            </p>
+          </div>
+
+          <div className="law-media">
+            <img src={sluLawImg} alt="Saint Louis University School of Law" />
+          </div>
+
         </section>
-      </main>
 
-      <footer style={{borderTop: '1px solid #e6eef8', padding: '20px 24px', marginTop: 48, background: '#fff'}}>
-        <div style={{maxWidth: 1100, margin: '0 auto', color: '#64748b'}}>© {new Date().getFullYear()} TULIP</div>
-      </footer>
-    </div>
-  )
+        <section
+          className="services"
+          id="about"
+          aria-labelledby="services-title"
+        >
+          <div>
+            <p className="eyebrow">HOW WE CAN HELP</p>
+            <h2 id="services-title">Common questions we support.</h2>
+          </div>
+
+          <ul>
+            <li>Housing, benefits, and public services</li>
+            <li>Family, safety, and immigration matters</li>
+            <li>Workplace, debt, and consumer questions</li>
+          </ul>
+        </section>
+
+        <section
+          className="clinics"
+          id="clinics"
+          aria-labelledby="clinics-title"
+        >
+          <h2 id="clinics-title">Our Clinics</h2>
+
+          <ul className="clinic-grid">
+            {CLINICS.map((clinic, index) => (
+              <li className="clinic-card" key={index}>
+                <h3>{clinic.name}</h3>
+
+                <p className="clinic-row">
+                  <Icon src={locationIcon} />
+                  <span>{clinic.location}</span>
+                </p>
+
+                <p className="clinic-row">
+                  <Icon src={phoneIcon} />
+                  <a href={clinic.phoneHref}>{clinic.phone}</a>
+                </p>
+
+                <p className="clinic-row">
+                  <Icon src={emailIcon} />
+                  <a href={`mailto:${clinic.email}`}>{clinic.email}</a>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <footer className="footer" id="contact">
+          <div className="footer-brand">
+            <img className="mark mark-lg" src={tulipLogo} alt="" />
+
+            <div>
+              <p className="logo-word">TULIP</p>
+              <p className="footer-tagline">Digital Law Clinic Portal</p>
+            </div>
+          </div>
+
+          <nav className="footer-col" aria-label="Quick links">
+            <h2>Quick Links</h2>
+
+            <ul>
+              {NAV_LINKS.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="footer-col">
+            <h2>Contact Us</h2>
+
+            <p className="clinic-row">
+              <Icon src={emailIcon} />
+              <a href="mailto:help@tulip.edu">help@tulip.edu</a>
+            </p>
+          </div>
+
+          <dl className="acronym">
+            {ACRONYM.map(([letter, rest]) => (
+              <div key={letter}>
+                <dt>{letter}</dt>
+                <dd>{rest}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="footer-legal">
+            © 2026 Saint Louis University Legal Clinics Program
+          </p>
+        </footer>
+      </main>
+    </>
+  );
 }

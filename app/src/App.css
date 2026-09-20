@@ -74,7 +74,7 @@ a:focus-visible, .account:focus-visible { outline:2px solid var(--accent); outli
 
 @media (max-width:950px) {
   .hero { grid-template-columns:1fr; padding-block:72px; }
-  .hero-media { min-height:240px; order:-1; }
+  .law-media { min-height:240px; order:-1; }
   .footer { grid-template-columns:repeat(2, minmax(0,1fr)); }
 }
 @media (max-width:650px) {

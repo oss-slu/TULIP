@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react'
 
 // TULIP Specific Intake Form Fields:
 
 const IntakeForm = ({ onSubmit }) => {
 
-  const [form, setForm] = useState({ //wireframe requirements 
+  const [form, setForm] = useState({ //wireframe requirements
     fullName: '',
     email: '',
     address: '',
@@ -22,6 +21,8 @@ const IntakeForm = ({ onSubmit }) => {
 
   const [errors, setErrors] = useState({})
   const [showSSN, setShowSSN] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }))
@@ -47,6 +48,7 @@ const IntakeForm = ({ onSubmit }) => {
     e.preventDefault()
     if (!validate()) return
     if (onSubmit) onSubmit(form)
+    setSubmitted(true)
   }
 
   const labelStyle = {
@@ -66,6 +68,21 @@ const IntakeForm = ({ onSubmit }) => {
     width: '100%'
   }
 
+  if (submitted) {
+    return (
+      <div style={{maxWidth:760, margin:'0 auto', padding:'70px 24px', fontFamily:'Arial, sans-serif', color:'black', background:'white'}}>
+        <p style={{fontSize:13, letterSpacing:2, marginBottom:18}}>SAINT LOUIS UNIVERSITY LEGAL CLINICS PROGRAM</p>
+        <h1 style={{fontFamily:'Georgia, serif', fontSize:52, lineHeight:1.05, margin:'0 0 20px'}}>Thank you.</h1>
+        <p style={{fontSize:18, lineHeight:1.6}}>
+          Your intake form has been submitted successfully. 
+        </p>
+        <p style={{fontSize:18, lineHeight:1.6}}>
+          We will review your information and help determine the right next step.
+        </p>
+      </div>
+    )
+  } //if the form has been submitted, show a thank you message instead of the form
+
   return (
     <form onSubmit={handleSubmit} style={{maxWidth:760, margin:'0 auto', padding:'70px 24px', fontFamily:'Arial, sans-serif', color:'black', background:'white'}}>
 
@@ -74,8 +91,8 @@ const IntakeForm = ({ onSubmit }) => {
       <h1 style={{fontFamily:'Georgia, serif', fontSize:52, lineHeight:1.05, margin:'0 0 20px'}}>Tell us how we can help.</h1>
 
       <p style={{fontSize:18, lineHeight:1.6, maxWidth:650, marginBottom:8}}>
-        This intake form is the first step in connecting you with legal assistance. 
-      </p> 
+        This intake form is the first step in connecting you with legal assistance.
+      </p>
 
       <p style={{fontSize:14, marginBottom:35}}>Fields marked * are required.</p>
 
@@ -109,7 +126,7 @@ const IntakeForm = ({ onSubmit }) => {
         <div>{errors.birthDate}</div>
       </label>
 
-      <label style={labelStyle}> 
+      <label style={labelStyle}>
         Social Security number *
         <div style={{display:'flex', gap:8}}>
           <input type={showSSN ? 'text' : 'password'} name="ssn" value={form.ssn} onChange={handleChange} style={inputStyle} required />
@@ -154,6 +171,7 @@ const IntakeForm = ({ onSubmit }) => {
         <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} required />
         <span>I acknowledge the clinic's consent and confidentiality terms *</span>
       </label>
+
       <div>{errors.consent}</div>
 
       <label style={labelStyle}>
@@ -169,6 +187,7 @@ const IntakeForm = ({ onSubmit }) => {
     </form>
   )
 }
+
 //changed a lot of wording to go with existing homepage that is more welcoming and less formal, and to make it more clear what the form is for. Also added a few more fields that were in the wireframe but not in the original form.
 
 export default IntakeForm

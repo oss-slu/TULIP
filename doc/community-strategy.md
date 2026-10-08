@@ -6,9 +6,13 @@
 
 **Last Updated:** 7 October 2026
 
-## Executive Summary
+## Executive Summary (with help from GitHub Copilot)
 
-[2-3 paragraph overview: What's your community strategy? Who are you trying to attract? How will you engage and support them?]
+TULIP’s community strategy centers on building a collaborative, sustainable open-source community around the project over the next 1–2 years. The project aims to grow from a small group of active student contributors to a broader base of contributors and users, with goals such as responding to community members within 24 hours, maintaining regular engagement at weekly meetings, and increasing the number of contributors and PRs over time. The strategy targets two primary audiences: first-time open-source contributors who need clear, beginner-friendly opportunities and guidance, and experienced developers who can contribute technical skills and help advance the project.
+
+The document emphasizes a contributor-first approach, focusing on accessibility, documentation, and clear communication. It outlines a contributor journey that starts with discovery through GitHub and OSS Slack, continues with a strong first impression supported by a quality README, contribution guide, and Code of Conduct, and progresses into first contributions through well-defined issues and manageable setup tasks. It also identifies the project’s current strengths, including active contributors, simple PR workflows, and regular deadlines, while addressing areas for improvement such as issue labeling, better onboarding resources, and stronger documentation like architecture and testing guidance. Governance is described as consensus-based, with clear roles for maintainers, core contributors, regular contributors, and users, and a plan to evolve responsibilities as the community grows.
+
+The strategy also prioritizes community engagement through GitHub and Slack communication, weekly meetings, and ongoing recognition of contributors. It includes practical steps for onboarding and retention, such as issue and PR templates, code of conduct enforcement, and opportunities for contributor growth through peer review and project involvement. To support long-term sustainability, the project puts emphasis on documentation, knowledge transfer, and succession planning so that the community can continue to function as contributors change over time. Overall, TULIP’s community strategy is built around creating an inclusive, supportive environment that attracts new contributors, maintains engagement, and supports steady project growth.
 
 ## Community Vision
 

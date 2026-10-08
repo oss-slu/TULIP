@@ -4,6 +4,18 @@ authors:
     family-names: Ott
     email: bella.c.ott.04@gmail.com
     affiliation: Open Source with SLU
+  - given-names: Emma
+    family-names: McClelland
+    email: emma.mcclelland@slu.edu
+    affiliation: Open Source with SLU
+  - given-names: Kiara
+    family-names: Mathews
+    email: kiara.mathews@slu.edu
+    affiliation: Open Source with SLU
+  - given-names: Lena
+    family-names: Pham
+    email: lena.pham@slu.edu
+    affiliation: Open Source with SLU
 cff-version: 1.2.0
 message: If you use this software, please cite it using the metadata from this file.
 type: software

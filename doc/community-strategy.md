@@ -14,7 +14,7 @@
 
 ### Vision Statement
 
-[What does a thriving community look like for this project in 1-2 years?]
+In the next 1-2 years, this project will have >5 users by the 1st year, and more than 10 contributors by the 2nd year.
 
 ### Community Goals
 
@@ -24,11 +24,9 @@
 
 ### Success Metrics
 
-- [Metric]: [Current: X, Target: Y]
+- Outside contributors: Current: 0, Target: ~1
 
-- [Metric]: [Current: X, Target: Y]
-
-- [Metric]: [Current: X, Target: Y]
+- Opened PRs per sprint: Current: 2-3, Target: 3-4
 
 ## Target Community Members
 
@@ -36,23 +34,23 @@
 
 **Persona 1: First-Time OSS Contributor**
 
-- **Background:** [Experience level, motivations]
+- **Background:** any experience level; beginner to OSS; wants to learn more about OSS through contributions
 
-- **Needs:** [What they need to be successful]
+- **Needs:** specific, easy Issues to get acquainted with the project
 
-- **Barriers:** [What's blocking them]
+- **Barriers:** potentially limited knowledge of Open Source practices
 
-- **How we'll support:** [Specific tactics]
+- **How we'll support:** implement better documentation for more guidance
 
 **Persona 2: Experienced Developer**
 
-- **Background:** [Experience level, motivations]
+- **Background:** intermediate to advanced experience level; wants to bring skills to enhance OSS project
 
-- **Needs:** [What they need to be successful]
+- **Needs:** interesting tasks to complete
 
-- **Barriers:** [What's blocking them]
+- **Barriers:** skill set might not match the project needs
 
-- **How we'll support:** [Specific tactics]
+- **How we'll support:** document tech stack and external APIs to attract a variety of developers
 
 ## Community Health Assessment
 

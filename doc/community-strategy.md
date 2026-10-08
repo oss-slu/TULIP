@@ -1,10 +1,8 @@
-# Community Strategy
-
-**Project:** TULIP
+# Community Strategy (Draft)
 
 **Version:** 0.1
 
-**Last Updated:** 7 October 2026
+**Last Updated:** 8 October 2026
 
 ## Executive Summary (with help from GitHub Copilot)
 

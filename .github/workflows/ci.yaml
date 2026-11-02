@@ -45,6 +45,50 @@ jobs:
       - name: Run ESLint
         working-directory: ./api
         run: npm run lint
+  sbom:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate app SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: ./app
+          format: spdx-json
+          output-file: tulip-app-sbom.spdx.json
+
+      - name: Generate API SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: ./api
+          format: spdx-json
+          output-file: tulip-api-sbom.spdx.json
+
+      - name: Upload SBOMs
+        uses: actions/upload-artifact@v4
+        with:
+          name: tulip-sboms
+          path: |
+            tulip-app-sbom.spdx.json
+            tulip-api-sbom.spdx.json
+          if-no-files-found: error
+
+      - name: Attest app SBOM provenance
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/attest@v4
+        with:
+          subject-path: tulip-app-sbom.spdx.json
+
+      - name: Attest API SBOM provenance
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/attest@v4
+        with:
+          subject-path: tulip-api-sbom.spdx.json
 
 #   docker:
 #     runs-on: ubuntu-latest

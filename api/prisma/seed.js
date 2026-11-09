@@ -1,3 +1,4 @@
+
 import { prisma, disconnect } from '../util/prisma.js'
 
 const clinics = [
@@ -37,82 +38,204 @@ async function getClinic(name) {
 }
 
 async function main() {
-  const clinicRecords = await Promise.all(clinics.map(({ name }) => getClinic(name)))
+  const clinicRecords = await Promise.all(
+    clinics.map(({ name }) => getClinic(name)),
+  )
+
   const clinicByName = Object.fromEntries(
     clinicRecords.map((clinic) => [clinic.name, clinic]),
   )
 
+  // Create or update the admin account.
   const admin = await prisma.user.upsert({
     where: { email: 'admin@tulip.slu.edu' },
-    update: { firstName: 'TULIP', lastName: 'Administrator', admin: true },
-    create: { email: 'admin@tulip.slu.edu', firstName: 'TULIP', lastName: 'Administrator', admin: true },
+    update: {
+      firstName: 'TULIP',
+      lastName: 'Administrator',
+      admin: true,
+    },
+    create: {
+      email: 'admin@tulip.slu.edu',
+      firstName: 'TULIP',
+      lastName: 'Administrator',
+      admin: true,
+    },
   })
 
-  const providers = await Promise.all([
-    ['maria.santos@tulip.slu.edu', 'Maria', 'Santos', "Children's Permanency"],
-    ['james.wright@tulip.slu.edu', 'James', 'Wright', 'Civil Litigation'],
-    ['amina.patel@tulip.slu.edu', 'Amina', 'Patel', 'Criminal Defense'],
-    ['brandon.cho@tulip.slu.edu', 'Brandon', 'Cho', 'Entrepreneurship and Community Development'],
-    ['sophia.green@tulip.slu.edu', 'Sophia', 'Green', 'Human Rights at Home Litigation'],
-    ['daniel.hall@tulip.slu.edu', 'Daniel', 'Hall', 'Medical-Legal Partnership'],
-  ].map(async ([email, firstName, lastName, clinicName]) => {
-    const clinicId = clinicByName[clinicName].id
-    const provider = await prisma.user.upsert({
-      where: { email },
-      update: { firstName, lastName },
-      create: { email, firstName, lastName },
-    })
-    await prisma.userClinicGroup.deleteMany({ where: { userId: provider.id, clinicId } })
-    await prisma.userClinicGroup.create({ data: { userId: provider.id, clinicId, role: 'PROVIDER' } })
-    return provider
-  }))
+  // Create provider accounts and assign each provider to a clinic.
+  const providers = await Promise.all(
+    [
+      ['maria.santos@tulip.slu.edu', 'Maria', 'Santos', "Children's Permanency"],
+      ['james.wright@tulip.slu.edu', 'James', 'Wright', 'Civil Litigation'],
+      ['amina.patel@tulip.slu.edu', 'Amina', 'Patel', 'Criminal Defense'],
+      ['brandon.cho@tulip.slu.edu', 'Brandon', 'Cho', 'Entrepreneurship and Community Development'],
+      ['sophia.green@tulip.slu.edu', 'Sophia', 'Green', 'Human Rights at Home Litigation'],
+      ['daniel.hall@tulip.slu.edu', 'Daniel', 'Hall', 'Medical-Legal Partnership'],
+    ].map(async ([email, firstName, lastName, clinicName]) => {
+      const clinicId = clinicByName[clinicName].id
 
-  await prisma.userClinicGroup.deleteMany({ where: { userId: admin.id } })
+      const provider = await prisma.user.upsert({
+        where: { email },
+        update: { firstName, lastName },
+        create: { email, firstName, lastName },
+      })
+
+      await prisma.userClinicGroup.deleteMany({
+        where: { userId: provider.id, clinicId },
+      })
+
+      await prisma.userClinicGroup.create({
+        data: { userId: provider.id, clinicId, role: 'PROVIDER' },
+      })
+
+      return provider
+    }),
+  )
+
+  // Assign the admin account to the Children's Permanency clinic.
+  await prisma.userClinicGroup.deleteMany({
+    where: { userId: admin.id },
+  })
+
   await prisma.userClinicGroup.create({
-    data: { userId: admin.id, clinicId: clinicByName["Children's Permanency"].id, role: 'ADMIN' },
+    data: {
+      userId: admin.id,
+      clinicId: clinicByName["Children's Permanency"].id,
+      role: 'ADMIN',
+    },
   })
+
+  // Shared information for fictional sample intake submissions.
+  const commonIntakeFields = {
+    preferredName: '',
+    formerNames: '',
+    pronouns: '',
+    preferredContactMethod: 'Phone',
+    safeContactTime: 'Afternoons',
+    language: 'English',
+    interpreterNeeded: 'no',
+    safeVoicemail: 'yes',
+    safeMessages: 'yes',
+    incomeSource: 'Employment',
+    currentAttorney: 'No',
+    referralSource: 'Friend',
+    householdInfo: 'no',
+    institutionsInvolved: 'no',
+    reasonForIntake: 'Sample reason for requesting legal assistance.',
+    consent: true,
+  }
 
   const intakeSeeds = [
     {
-      email: 'alex.rivera@example.test', firstName: 'Alex', lastName: 'Rivera',
+      ...commonIntakeFields,
+      id: 'sample-intake-alex',
+      email: 'alex.rivera@example.test',
+      firstName: 'Alex',
+      lastName: 'Rivera',
+      fullName: 'Alex Rivera',
+      birthDate: new Date('1991-06-15'),
       clinicId: clinicByName['Medical-Legal Partnership'].id,
-      clinicName: 'Medical-Legal Partnership', status: 'NEW',
-      street_address: '100 Market Street', city: 'St. Louis', state: 'MO', country: 'US',
-      zipCode: 63101, mobilePhone: '555-010-1001', homePhone: '555-010-1002',
-      ssn: 1, dob: new Date('1991-06-15'),
+      clinicName: 'Medical-Legal Partnership',
+      status: 'NEW',
+      mailingAddress: '100 Market Street, St. Louis, MO 63101',
+      physicalAddress: '100 Market Street, St. Louis, MO 63101',
+      phone: '555-010-1001',
+      monthlyIncome: '$2,500',
+      employerName: 'Sample Employer',
+      employerAddress: '500 Main Street, St. Louis, MO 63101',
+      employerPhone: '555-010-1002',
+      caseType: 'mlp',
+      signature: 'Alex Rivera',
     },
     {
-      email: 'jordan.lee@example.test', firstName: 'Jordan', lastName: 'Lee',
+      ...commonIntakeFields,
+      id: 'sample-intake-jordan',
+      email: 'jordan.lee@example.test',
+      firstName: 'Jordan',
+      lastName: 'Lee',
+      fullName: 'Jordan Lee',
+      birthDate: new Date('1987-11-03'),
       clinicId: clinicByName['Civil Litigation'].id,
-      clinicName: 'Civil Litigation', status: 'IN_PROGRESS',
-      street_address: '200 Olive Street', city: 'St. Louis', state: 'MO', country: 'US',
-      zipCode: 63103, mobilePhone: '555-010-2001', homePhone: '555-010-2002',
-      ssn: 2, dob: new Date('1987-11-03'),
+      clinicName: 'Civil Litigation',
+      status: 'IN_PROGRESS',
+      mailingAddress: '200 Olive Street, St. Louis, MO 63103',
+      physicalAddress: '200 Olive Street, St. Louis, MO 63103',
+      phone: '555-010-2001',
+      monthlyIncome: '$3,000',
+      employerName: 'Sample Company',
+      employerAddress: '400 Pine Street, St. Louis, MO 63103',
+      employerPhone: '555-010-2002',
+      caseType: 'civil',
+      signature: 'Jordan Lee',
     },
   ]
 
+  // Create client accounts and their sample intake submissions.
   for (const intake of intakeSeeds) {
     const user = await prisma.user.upsert({
       where: { email: intake.email },
-      update: { firstName: intake.firstName, lastName: intake.lastName },
-      create: { email: intake.email, firstName: intake.firstName, lastName: intake.lastName },
+      update: {
+        firstName: intake.firstName,
+        lastName: intake.lastName,
+      },
+      create: {
+        email: intake.email,
+        firstName: intake.firstName,
+        lastName: intake.lastName,
+      },
     })
+
     await prisma.userClinicGroup.deleteMany({
-      where: { userId: user.id, clinicId: intake.clinicId },
+      where: {
+        userId: user.id,
+        clinicId: intake.clinicId,
+      },
     })
-    await prisma.userClinicGroup.create({ data: { userId: user.id, clinicId: intake.clinicId, role: 'CLIENT' } })
+
+    await prisma.userClinicGroup.create({
+      data: {
+        userId: user.id,
+        clinicId: intake.clinicId,
+        role: 'CLIENT',
+      },
+    })
+
+    // Exclude account-specific fields from the intake form record.
+    const intakeFormData = { ...intake }
+    delete intakeFormData.firstName
+    delete intakeFormData.lastName
+
     await prisma.intakeForm.upsert({
-      where: { email: intake.email },
-      update: { ...intake, userId: user.id },
-      create: { ...intake, userId: user.id },
+      where: { id: intake.id },
+      update: {
+        ...intakeFormData,
+        userId: user.id,
+        ssnEncrypted: null,
+      },
+      create: {
+        ...intakeFormData,
+        userId: user.id,
+        ssnEncrypted: null,
+      },
     })
   }
 
+  // Record that the seed data was initialized.
   await prisma.logs.deleteMany({
-    where: { message: 'TULIP seed data initialized.', from: 'seed', to: 'database' },
+    where: {
+      message: 'TULIP seed data initialized.',
+      from: 'seed',
+      to: 'database',
+    },
   })
+
   await prisma.logs.create({
-    data: { userId: admin.id, message: 'TULIP seed data initialized.', from: 'seed', to: 'database' },
+    data: {
+      userId: admin.id,
+      message: 'TULIP seed data initialized.',
+      from: 'seed',
+      to: 'database',
+    },
   })
 
   console.log(

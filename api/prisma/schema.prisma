@@ -63,25 +63,80 @@ model UserClinicGroup {
 }
 
 model IntakeForm {
-  id             String         @id @default(cuid())
-  clinicId       String
-  userId         String
-  status         ProgressStatus @default(NEW)
-  clinicName     String
-  firstName      String
-  lastName       String
-  email          String         @unique
-  street_address String
-  city           String
-  state          String
-  country        String
-  zipCode        Int
-  mobilePhone    String
-  homePhone      String
-  ssn            Int
-  dob            DateTime
-  clinic         Clinic         @relation(fields: [clinicId], references: [id])
-  user           user           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String         @id @default(cuid())
+  clinicId   String
+  userId     String
+  status     ProgressStatus @default(NEW)
+  clinicName String
+
+  // Basic identifying information
+  fullName           String
+  businessName       String?
+  primaryContactName String?
+  preferredName      String?
+  formerNames        String?
+  birthDate          DateTime
+  ssnEncrypted       String?
+  pronouns           String?
+
+  // Contact information
+  mailingAddress         String
+  physicalAddress        String
+  phone                  String
+  email                  String
+  preferredContactMethod String
+  safeContactTime        String
+  language               String
+  interpreterNeeded      String
+  interpreterLanguage    String?
+  safeVoicemail          String
+  safeMessages           String
+
+  // Financial and employment information
+  monthlyIncome   String
+  incomeSource    String
+  employerName    String
+  employerAddress String
+  employerPhone   String
+
+  // Attorney and referral information
+  currentAttorney String
+  referralSource  String
+  referralOther   String?
+
+  // Household and family information
+  householdInfo          String
+  maritalStatus          String?
+  spouseName             String?
+  spouseAddress          String?
+  spouseBirthDate        DateTime?
+  childrenNames          String?
+  childrenBirthDates     String?
+  householdMembers       String?
+  householdRelationships String?
+  othersInvolved         String?
+  opposingParties        String?
+  opposingPartyAttorney  String?
+
+  // Legal matter information
+  caseType               String
+  reasonForIntake        String
+  institutionsInvolved   String
+  agencyName             String?
+  agencyPersonDepartment String?
+  agencyRelationship     String?
+  agencyOtherIndividuals String?
+
+  // Consent and signature
+  consent   Boolean
+  signature String
+
+  // Relationships
+  clinic Clinic @relation(fields: [clinicId], references: [id])
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum ProgressStatus {

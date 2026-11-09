@@ -46,6 +46,7 @@ async function main() {
     clinicRecords.map((clinic) => [clinic.name, clinic]),
   )
 
+  // Create or update the admin account.
   const admin = await prisma.user.upsert({
     where: { email: 'admin@tulip.slu.edu' },
     update: {
@@ -61,6 +62,7 @@ async function main() {
     },
   })
 
+  // Create provider accounts and assign each provider to a clinic.
   const providers = await Promise.all(
     [
       ['maria.santos@tulip.slu.edu', 'Maria', 'Santos', "Children's Permanency"],
@@ -90,6 +92,7 @@ async function main() {
     }),
   )
 
+  // Assign the admin account to the Children's Permanency clinic.
   await prisma.userClinicGroup.deleteMany({
     where: { userId: admin.id },
   })
@@ -102,94 +105,72 @@ async function main() {
     },
   })
 
-  // Sample intake submissions use fictional data.
+  // Shared information for fictional sample intake submissions.
+  const commonIntakeFields = {
+    preferredName: '',
+    formerNames: '',
+    pronouns: '',
+    preferredContactMethod: 'Phone',
+    safeContactTime: 'Afternoons',
+    language: 'English',
+    interpreterNeeded: 'no',
+    safeVoicemail: 'yes',
+    safeMessages: 'yes',
+    incomeSource: 'Employment',
+    currentAttorney: 'No',
+    referralSource: 'Friend',
+    householdInfo: 'no',
+    institutionsInvolved: 'no',
+    reasonForIntake: 'Sample reason for requesting legal assistance.',
+    consent: true,
+  }
+
   const intakeSeeds = [
     {
+      ...commonIntakeFields,
       id: 'sample-intake-alex',
       email: 'alex.rivera@example.test',
       firstName: 'Alex',
       lastName: 'Rivera',
+      fullName: 'Alex Rivera',
+      birthDate: new Date('1991-06-15'),
       clinicId: clinicByName['Medical-Legal Partnership'].id,
       clinicName: 'Medical-Legal Partnership',
       status: 'NEW',
-
-      fullName: 'Alex Rivera',
-      birthDate: new Date('1991-06-15'),
-      preferredName: 'Alex',
-      formerNames: '',
-      pronouns: '',
-
       mailingAddress: '100 Market Street, St. Louis, MO 63101',
       physicalAddress: '100 Market Street, St. Louis, MO 63101',
       phone: '555-010-1001',
-      preferredContactMethod: 'Phone',
-      safeContactTime: 'Afternoons',
-      language: 'English',
-      interpreterNeeded: 'no',
-      safeVoicemail: 'yes',
-      safeMessages: 'yes',
-
       monthlyIncome: '$2,500',
-      incomeSource: 'Employment',
       employerName: 'Sample Employer',
       employerAddress: '500 Main Street, St. Louis, MO 63101',
       employerPhone: '555-010-1002',
-
-      currentAttorney: 'No',
-      referralSource: 'Friend',
-
-      householdInfo: 'no',
       caseType: 'mlp',
-      reasonForIntake: 'Sample reason for requesting legal assistance.',
-      institutionsInvolved: 'no',
-
-      consent: true,
       signature: 'Alex Rivera',
     },
     {
+      ...commonIntakeFields,
       id: 'sample-intake-jordan',
       email: 'jordan.lee@example.test',
       firstName: 'Jordan',
       lastName: 'Lee',
+      fullName: 'Jordan Lee',
+      birthDate: new Date('1987-11-03'),
       clinicId: clinicByName['Civil Litigation'].id,
       clinicName: 'Civil Litigation',
       status: 'IN_PROGRESS',
-
-      fullName: 'Jordan Lee',
-      birthDate: new Date('1987-11-03'),
-      preferredName: 'Jordan',
-      formerNames: '',
-      pronouns: '',
-
       mailingAddress: '200 Olive Street, St. Louis, MO 63103',
       physicalAddress: '200 Olive Street, St. Louis, MO 63103',
       phone: '555-010-2001',
-      preferredContactMethod: 'Phone',
-      safeContactTime: 'Mornings',
-      language: 'English',
-      interpreterNeeded: 'no',
-      safeVoicemail: 'yes',
-      safeMessages: 'yes',
-
       monthlyIncome: '$3,000',
-      incomeSource: 'Employment',
       employerName: 'Sample Company',
       employerAddress: '400 Pine Street, St. Louis, MO 63103',
       employerPhone: '555-010-2002',
-
-      currentAttorney: 'No',
-      referralSource: 'Friend',
-
-      householdInfo: 'no',
       caseType: 'civil',
-      reasonForIntake: 'Sample reason for requesting legal assistance.',
-      institutionsInvolved: 'no',
-
-      consent: true,
       signature: 'Jordan Lee',
     },
   ]
 
+  // Create client accounts and their sample intake submissions.
   for (const intake of intakeSeeds) {
     const user = await prisma.user.upsert({
       where: { email: intake.email },
@@ -219,11 +200,10 @@ async function main() {
       },
     })
 
-    const {
-      firstName,
-      lastName,
-      ...intakeFormData
-    } = intake
+    // Exclude account-specific fields from the intake form record.
+    const intakeFormData = { ...intake }
+    delete intakeFormData.firstName
+    delete intakeFormData.lastName
 
     await prisma.intakeForm.upsert({
       where: { id: intake.id },
@@ -240,6 +220,7 @@ async function main() {
     })
   }
 
+  // Record that the seed data was initialized.
   await prisma.logs.deleteMany({
     where: {
       message: 'TULIP seed data initialized.',

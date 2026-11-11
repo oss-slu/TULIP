@@ -1,4 +1,4 @@
-# TULIP Project Strategy
+# TULIP Product Strategy (Draft)
 
 ## **8 October 2026**
 

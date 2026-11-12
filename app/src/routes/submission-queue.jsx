@@ -49,51 +49,6 @@ const initialIntakes = [
     "Nov 11, 2026",
     "Housing"
   ),
-  createIntake(
-    "TUL-1039",
-    "Ethan Brooks",
-    "Nov 9, 2026",
-    "Awaiting Information",
-    "Jordan K.",
-    "Nov 11, 2026",
-    "Employment"
-  ),
-  createIntake(
-    "TUL-1038",
-    "Olivia Bennett",
-    "Nov 8, 2026",
-    "New",
-    "Unassigned",
-    "Nov 8, 2026",
-    "Housing"
-  ),
-  createIntake(
-    "TUL-1037",
-    "Noah Davis",
-    "Nov 7, 2026",
-    "Under Review",
-    "Alex P.",
-    "Nov 10, 2026",
-    "Family Law"
-  ),
-  createIntake(
-    "TUL-1036",
-    "Ava Wilson",
-    "Nov 6, 2026",
-    "Assigned",
-    "Taylor M.",
-    "Nov 9, 2026",
-    "Housing"
-  ),
-  createIntake(
-    "TUL-1035",
-    "Liam Johnson",
-    "Nov 5, 2026",
-    "Awaiting Information",
-    "Jordan K.",
-    "Nov 8, 2026",
-    "Immigration"
-  ),
 ];
 
 const statuses = ["New", "Under Review", "Assigned", "Awaiting Information"];

@@ -45,7 +45,7 @@ export default function Header() {
         Contact us
       </a>
 
-      <a className="account" href="#account" aria-label="Account">
+      <a className="account" href="/account" aria-label="Account">
         <AccountIcon />
       </a>
     </header>

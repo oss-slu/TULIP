@@ -3,79 +3,97 @@ import Header from "../components/header/header";
 import "../App.css";
 import "./submission-queue.css";
 
+const createIntake = (
+  id,
+  client,
+  date,
+  status,
+  assignedTo,
+  updated,
+  caseType
+) => ({
+  id,
+  client,
+  date,
+  status,
+  assignedTo,
+  updated,
+  caseType,
+});
+
 const initialIntakes = [
-  {
-    id: "TUL-1042",
-    client: "Sarah Miller",
-    date: "Nov 12, 2026",
-    status: "New",
-    assignedTo: "Unassigned",
-    updated: "Nov 12, 2026",
-    caseType: "Housing",
-  },
-  {
-    id: "TUL-1041",
-    client: "James Carter",
-    date: "Nov 11, 2026",
-    status: "Under Review",
-    assignedTo: "Alex P.",
-    updated: "Nov 12, 2026",
-    caseType: "Family Law",
-  },
-  {
-    id: "TUL-1040",
-    client: "Maria Lopez",
-    date: "Nov 10, 2026",
-    status: "Assigned",
-    assignedTo: "Taylor M.",
-    updated: "Nov 11, 2026",
-    caseType: "Housing",
-  },
-  {
-    id: "TUL-1039",
-    client: "Ethan Brooks",
-    date: "Nov 9, 2026",
-    status: "Awaiting Information",
-    assignedTo: "Jordan K.",
-    updated: "Nov 11, 2026",
-    caseType: "Employment",
-  },
-  {
-    id: "TUL-1038",
-    client: "Olivia Bennett",
-    date: "Nov 8, 2026",
-    status: "New",
-    assignedTo: "Unassigned",
-    updated: "Nov 8, 2026",
-    caseType: "Housing",
-  },
-  {
-    id: "TUL-1037",
-    client: "Noah Davis",
-    date: "Nov 7, 2026",
-    status: "Under Review",
-    assignedTo: "Alex P.",
-    updated: "Nov 10, 2026",
-    caseType: "Family Law",
-  },
-  {
-    id: "TUL-1036",
-    client: "Ava Wilson",
-    date: "Nov 6, 2026",
-    status: "Assigned",
-    assignedTo: "Taylor M.",
-    updated: "Nov 9, 2026",
-    caseType: "Housing",
-  },
-  {
-    id: "TUL-1035",
-    client: "Liam Johnson",
-    date: "Nov 5, 2026",
-    status: "Awaiting Information",
-    assignedTo: "Jordan K.",
-    updated: "Nov 8, 2026",
-    caseType: "Immigration",
-  },
+  createIntake(
+    "TUL-1042",
+    "Sarah Miller",
+    "Nov 12, 2026",
+    "New",
+    "Unassigned",
+    "Nov 12, 2026",
+    "Housing"
+  ),
+  createIntake(
+    "TUL-1041",
+    "James Carter",
+    "Nov 11, 2026",
+    "Under Review",
+    "Alex P.",
+    "Nov 12, 2026",
+    "Family Law"
+  ),
+  createIntake(
+    "TUL-1040",
+    "Maria Lopez",
+    "Nov 10, 2026",
+    "Assigned",
+    "Taylor M.",
+    "Nov 11, 2026",
+    "Housing"
+  ),
+  createIntake(
+    "TUL-1039",
+    "Ethan Brooks",
+    "Nov 9, 2026",
+    "Awaiting Information",
+    "Jordan K.",
+    "Nov 11, 2026",
+    "Employment"
+  ),
+  createIntake(
+    "TUL-1038",
+    "Olivia Bennett",
+    "Nov 8, 2026",
+    "New",
+    "Unassigned",
+    "Nov 8, 2026",
+    "Housing"
+  ),
+  createIntake(
+    "TUL-1037",
+    "Noah Davis",
+    "Nov 7, 2026",
+    "Under Review",
+    "Alex P.",
+    "Nov 10, 2026",
+    "Family Law"
+  ),
+  createIntake(
+    "TUL-1036",
+    "Ava Wilson",
+    "Nov 6, 2026",
+    "Assigned",
+    "Taylor M.",
+    "Nov 9, 2026",
+    "Housing"
+  ),
+  createIntake(
+    "TUL-1035",
+    "Liam Johnson",
+    "Nov 5, 2026",
+    "Awaiting Information",
+    "Jordan K.",
+    "Nov 8, 2026",
+    "Immigration"
+  ),
 ];
 
 const statuses = ["New", "Under Review", "Assigned", "Awaiting Information"];
